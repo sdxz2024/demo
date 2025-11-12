@@ -33,7 +33,7 @@ public class UserController {
                     (rs, rowNum) -> {
                         User u = new User();
                         u.setId(rs.getString("id"));
-                        u.setName(rs.getString("username"));
+                        u.setName(rs.getString("name"));
                         u.setPassword(rs.getString("password"));
                         u.setSex(rs.getInt("sex"));
                         return u;
@@ -60,6 +60,7 @@ public String toRegister(){
 //4.处理注册请求
 @PostMapping("/doRegister")
 public String doRegister(User user,Model model){ 
+
     try{
         //检查用户名是否存在
         Integer count = jdbcTemplate.queryForObject(
@@ -75,8 +76,8 @@ public String doRegister(User user,Model model){
         String encrypPwd = PasswordUtil.encrypt(user.getPassword());
         //插入用户数据
         jdbcTemplate.update(
-                "INSERT INTO user (name, password, sex) VALUES (?, ?, ?)",
-                user.getName(), encrypPwd, user.getSex()
+                "INSERT INTO user (id, name, password, sex) VALUES (?, ?, ?, ?)",
+                user.getId(), user.getName(), encrypPwd, user.getSex()
         );
         return "redirect:/login";  //注册成功，跳转登录页
     }catch(Exception e){

@@ -23,7 +23,7 @@ public class Card {
         return money;
     }
 
-    public int getSate() {
+    public int getState() {
         return state;
     }
 
