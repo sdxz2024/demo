@@ -24,16 +24,23 @@
                 <table class="table table-striped">
                     <thead>
                         <tr>
-                            <th>卡号</th>
-                            <th>余额</th>
-                            <th>状态</th>
-                            <th>操作</th>
+                            <th style="width: 30%;">卡号</th>
+                            <th style="width: 20%;">余额</th>
+                            <th style="width: 20%;">存取款</th>
+                            <th style="width: 15%;">状态</th>
+                            <th style="width: 15%;">操作</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr th:each="card : ${cardList}">
                             <td>[[${card.card_id}]]</td>
                             <td>[[${card.money}]]</td>
+                            <td>
+                                <form action="/card/transaction" method="get" class="d-inline">
+                                    <input type="hidden" name="cardId" th:value="${card.card_id}">
+                                    <button type="submit" class="btn btn-sm btn-info">存取款</button>
+                                </form>
+                            </td>
                             <td th:switch="${card.state}">
                                 <span th:case="1" class="text-success">正常</span>
                                 <span th:case="0" class="text-warning">冻结</span>
